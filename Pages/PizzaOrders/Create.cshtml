@@ -1,0 +1,85 @@
+﻿@page
+@model PizzaLoco.Pages.PizzaOrders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Pizza Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.ClientId" class="control-label">Client</label>
+                <select asp-for="PizzaOrder.ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                <span asp-validation-for="PizzaOrder.ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.PizzaId" class="control-label">Pizza</label>
+                <select asp-for="PizzaOrder.PizzaId" class="form-control" asp-items="ViewBag.PizzaId"></select>
+                <span asp-validation-for="PizzaOrder.PizzaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.PizzaBaseId" class="control-label">Base</label>
+                <select asp-for="PizzaOrder.PizzaBaseId" class="form-control" asp-items="ViewBag.PizzaBaseId"></select>
+                <span asp-validation-for="PizzaOrder.PizzaBaseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.PizzaSizeId" class="control-label">Size (cm)</label>
+                <select asp-for="PizzaOrder.PizzaSizeId" class="form-control" asp-items="ViewBag.PizzaSizeId"></select>
+                <span asp-validation-for="PizzaOrder.PizzaSizeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.Quantity" class="control-label"></label>
+                <input asp-for="PizzaOrder.Quantity" class="form-control" />
+                <span asp-validation-for="PizzaOrder.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.OrderDate" class="control-label"></label>
+                <input asp-for="PizzaOrder.OrderDate" class="form-control" />
+                <span asp-validation-for="PizzaOrder.OrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaOrder.PizzaToppings" class="control-label">Toppings/Extra</label>
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var topp in Model.AssignedToppingDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedCourses"
+                                               value="@topp.ToppingId"
+                                               @(Html.Raw(topp.Assigned ? "checked=\"checked\"" : "")) />
+                                        @topp.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

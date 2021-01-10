@@ -1,0 +1,93 @@
+﻿@page
+@model PizzaLoco.Pages.PizzaOrders.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pizza Orders</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].Client.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].Client.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].Pizza.Name)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.PizzaOrder[0].Pizza)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].PizzaBase.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].PizzaSize.Size)
+            </th>
+            <th>
+                Toppings/Extra
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaOrder[0].OrderDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PizzaOrderD.PizzaOrders)
+        {
+            string selectedRow = "";
+            if (item.Id == Model.PizzaOrderId)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pizza.Name)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Pizza.Ingredients)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaBase.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaSize.Size) cm
+            </td>
+            <td>
+                @{ foreach (var topping in item.PizzaToppings)
+                    {
+                        @topping.Topping.Id @: @topping.Topping.Name <br />
+                    } }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
